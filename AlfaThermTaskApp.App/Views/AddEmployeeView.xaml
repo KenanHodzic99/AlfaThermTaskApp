@@ -109,7 +109,7 @@
                 <TextBox.Text>
                     <Binding Path="Employee.Email" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <validationrules:EmptyStringValidationRule/>
+                            <validationrules:EmailValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

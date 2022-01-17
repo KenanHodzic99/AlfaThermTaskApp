@@ -13,7 +13,6 @@ namespace AlfaThermTaskApp.App.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             int result = 0;
-
             bool canConvert = int.TryParse(value as string, out result);
             return new ValidationResult(canConvert, "Must be a number!");
         }

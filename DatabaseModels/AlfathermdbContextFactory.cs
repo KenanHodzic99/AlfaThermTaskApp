@@ -13,7 +13,7 @@ namespace AlfaThermTaskApp.DatabaseModels
         public AlfathermdbContext CreateDbContext(string[] args = null)
         {
             var options = new DbContextOptionsBuilder<AlfathermdbContext>();
-            options.UseSqlServer("Data Source=.;Initial Catalog=AlfaThermDB;Integrated Security=True", conf =>
+            options.UseSqlServer("Server= MARKO-GALIC\\SQLEXPRESS; Database = AlfaThermDB; User Id = sa; Password = _&cf?mqND4wL;", conf =>
             {
                 conf.UseHierarchyId();
             });

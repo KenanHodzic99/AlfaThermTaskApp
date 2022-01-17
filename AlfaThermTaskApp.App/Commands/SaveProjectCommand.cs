@@ -13,7 +13,17 @@ namespace AlfaThermTaskApp.App.Commands
 {
     public class SaveProjectCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
+        }
 
         private readonly EditProjectViewModel _viewModel;
         private readonly IDataService<Projects> _dataService;
@@ -30,7 +40,16 @@ namespace AlfaThermTaskApp.App.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            var newProject = _viewModel.Project;
+            if(string.IsNullOrWhiteSpace(newProject.ProjectLocation) || string.IsNullOrWhiteSpace(newProject.ProjectName)
+                || string.IsNullOrWhiteSpace(newProject.ProjectStatus) || string.IsNullOrWhiteSpace(newProject.ProjectType))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public async void Execute(object parameter)

@@ -18,7 +18,17 @@ namespace AlfaThermTaskApp.App.Commands
         private readonly EditWorkCardViewModel editWorkCardViewModel;
         private readonly WorkCardViewModel workCardViewModel;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
+        }
 
         public SaveWorkCardCommand(INavigator navigator, IDataService<WorkCard> dataService, EditWorkCardViewModel editWorkCardViewModel, WorkCardViewModel workCardViewModel)
         {
@@ -30,7 +40,16 @@ namespace AlfaThermTaskApp.App.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            WorkCard newWorkCard = editWorkCardViewModel.WorkCard;
+
+            if(!string.IsNullOrWhiteSpace(newWorkCard.Activities) && newWorkCard.NumberOfWorkHours != 0 && newWorkCard.Project != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async void Execute(object parameter)

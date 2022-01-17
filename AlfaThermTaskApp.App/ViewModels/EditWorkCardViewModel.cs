@@ -48,6 +48,7 @@ namespace AlfaThermTaskApp.App.ViewModels
                 _workCard.Project = value;
                 _workCard.ProjectId = value.Id;
                 OnPropertyChanged(nameof(WorkCard));
+                CommandManager.InvalidateRequerySuggested();
             }
         }
 

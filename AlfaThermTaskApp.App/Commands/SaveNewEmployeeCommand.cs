@@ -21,7 +21,17 @@ namespace AlfaThermTaskApp.App.Commands
         private readonly EmployeesViewModel employeesViewModel;
         private readonly AddEmployeeViewModel addEmployeeViewModel;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
+        }
 
         public SaveNewEmployeeCommand(INavigator navigator, IAuthenticator authenticator, IPermissionService permissionService, 
             IDataService<Employees> dataService, EmployeesViewModel employeesViewModel, AddEmployeeViewModel addEmployeeViewModel)
@@ -36,7 +46,16 @@ namespace AlfaThermTaskApp.App.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            var Employee = addEmployeeViewModel.Employee;
+            if(Employee.Job == null || string.IsNullOrWhiteSpace(Employee.FirstName) || string.IsNullOrWhiteSpace(Employee.LastName)
+                || string.IsNullOrWhiteSpace(Employee.Email))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public async void Execute(object parameter)

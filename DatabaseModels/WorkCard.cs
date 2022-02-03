@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace AlfaThermTaskApp.DatabaseModels
+namespace CompanyManagmentApp.DatabaseModels
 {
     public partial class WorkCard : DomainObject
     {

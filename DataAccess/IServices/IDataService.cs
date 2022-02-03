@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DataAccess.IServices
+namespace CompanyManagmentApp.DataAccess.IServices
 {
     public interface IDataService<T>
     {

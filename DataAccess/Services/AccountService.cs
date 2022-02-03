@@ -1,5 +1,5 @@
-﻿using AlfaThermTaskApp.DataAccess.IServices;
-using AlfaThermTaskApp.DatabaseModels;
+﻿using CompanyManagmentApp.DataAccess.IServices;
+using CompanyManagmentApp.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,20 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DataAccess.Services
+namespace CompanyManagmentApp.DataAccess.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly AlfathermdbContextFactory _contextFactory;
+        private readonly CompanyManagmentAppDbContextFactory _contextFactory;
 
-        public AccountService(AlfathermdbContextFactory contextFactory)
+        public AccountService(CompanyManagmentAppDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
 
         public async Task<Users> Create(Users entity)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
 
                 Users newUser = entity;
@@ -42,7 +42,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<bool> Delete(int id)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 Users entity = await context.Users.FirstOrDefaultAsync((e) => e.Id == id);
                 context.Users.Remove(entity);
@@ -54,7 +54,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Users> Get(int id)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 Users entity = await context.Users.Include(x=>x.Employee).FirstOrDefaultAsync((e) => e.Id == id);
 
@@ -64,7 +64,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<IEnumerable<Users>> GetAll(object parameter = null)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 IEnumerable<Users> entities = await context.Users.Include(x => x.Employee).ToListAsync();
 
@@ -74,7 +74,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Users> GetByEmployee(Employees employee)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 Users user = await context.Users.FirstOrDefaultAsync(x=>x.EmployeeId==employee.Id);
                 return user;
@@ -83,7 +83,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Users> GetByUsername(string username)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 return await context.Users.Include(x => x.Employee).FirstOrDefaultAsync(x => x.Username == username);
             }
@@ -91,7 +91,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Users> Update(int id, Users entity)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 entity.Id = id;
                 context.Users.Update(entity);

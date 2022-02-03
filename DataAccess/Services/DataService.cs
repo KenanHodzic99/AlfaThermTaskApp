@@ -1,5 +1,5 @@
-﻿using AlfaThermTaskApp.DataAccess.IServices;
-using AlfaThermTaskApp.DatabaseModels;
+﻿using CompanyManagmentApp.DataAccess.IServices;
+using CompanyManagmentApp.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DataAccess.Services
+namespace CompanyManagmentApp.DataAccess.Services
 {
     public class DataService<T> : IDataService<T> where T : DomainObject
     {
-        private readonly AlfathermdbContextFactory _contextFactory;
+        private readonly CompanyManagmentAppDbContextFactory _contextFactory;
 
-        public DataService(AlfathermdbContextFactory contextFactory)
+        public DataService(CompanyManagmentAppDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
@@ -21,7 +21,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<T> Create(T entity)
         {
-            using(AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using(CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 var createdEntity = await context.Set<T>().AddAsync(entity);
                 await context.SaveChangesAsync();
@@ -32,7 +32,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<bool> Delete(int id)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 T entity = await context.Set<T>().FirstOrDefaultAsync((e) => e.Id == id);
                 context.Set<T>().Remove(entity);
@@ -44,7 +44,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<T> Get(int id)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 T entity = await context.Set<T>().FirstOrDefaultAsync((e) => e.Id == id);
 
@@ -55,7 +55,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<IEnumerable<T>> GetAll(object parameter = null)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 IEnumerable<T> entities = await context.Set<T>().ToListAsync();
                 
@@ -65,7 +65,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<T> Update(int id, T entity)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 entity.Id = id;
                 context.Set<T>().Update(entity);

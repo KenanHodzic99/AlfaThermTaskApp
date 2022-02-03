@@ -1,5 +1,5 @@
-﻿using AlfaThermTaskApp.DataAccess.IServices;
-using AlfaThermTaskApp.DatabaseModels;
+﻿using CompanyManagmentApp.DataAccess.IServices;
+using CompanyManagmentApp.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DataAccess.Services
+namespace CompanyManagmentApp.DataAccess.Services
 {
     public class UserDataService : IDataService<Users>
     {
-        private readonly AlfathermdbContextFactory _contextFactory;
+        private readonly CompanyManagmentAppDbContextFactory _contextFactory;
 
-        public UserDataService(AlfathermdbContextFactory contextFactory)
+        public UserDataService(CompanyManagmentAppDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
@@ -30,7 +30,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Users> Get(int id)
         {
-            using (AlfathermdbContext _dbContext = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _contextFactory.CreateDbContext())
             {
                 return await _dbContext.Users.Include(x => x.Employee)
                     .Include(x => x.Employee.Job)
@@ -46,7 +46,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Users> Update(int id, Users entity)
         {
-            using (AlfathermdbContext _dbContext = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _contextFactory.CreateDbContext())
             {
                 entity.Id = id;
                 _dbContext.Users.Update(entity);

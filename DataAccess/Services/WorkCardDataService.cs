@@ -1,5 +1,5 @@
-﻿using AlfaThermTaskApp.DataAccess.IServices;
-using AlfaThermTaskApp.DatabaseModels;
+﻿using CompanyManagmentApp.DataAccess.IServices;
+using CompanyManagmentApp.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,20 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DataAccess.Services
+namespace CompanyManagmentApp.DataAccess.Services
 {
     public class WorkCardDataService : IDataService<WorkCard>
     {
-        AlfathermdbContextFactory _dbContextFactory;
+        CompanyManagmentAppDbContextFactory _dbContextFactory;
 
-        public WorkCardDataService(AlfathermdbContextFactory dbContextFactory)
+        public WorkCardDataService(CompanyManagmentAppDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
 
         public async Task<WorkCard> Create(WorkCard entity)
         {
-            using(AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using(CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 entity.Employee = await _dbContext.Employees.FirstOrDefaultAsync(x=> x.Id == entity.EmployeeId);
                 entity.EmployeeId = entity.Employee.Id;
@@ -36,7 +36,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<bool> Delete(int id)
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 WorkCard entity = await _dbContext.WorkCard.FirstOrDefaultAsync((e) => e.Id == id);
                 _dbContext.WorkCard.Remove(entity);
@@ -48,7 +48,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<WorkCard> Get(int id)
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 return await _dbContext.WorkCard.Include(x=>x.Employee).Include(x=>x.Project).FirstOrDefaultAsync((e) => e.Id == id);
             }
@@ -57,7 +57,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
         public async Task<IEnumerable<WorkCard>> GetAll(object parameter = null)
         {
             int employeeId = (int)parameter;
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 return await _dbContext.WorkCard.Include(x => x.Employee).Include(x => x.Project).Where((e) => e.EmployeeId == employeeId).ToListAsync();
             }
@@ -65,7 +65,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<WorkCard> Update(int id, WorkCard entity)
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 entity.Id = id;
                 _dbContext.WorkCard.Update(entity);

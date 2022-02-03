@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DatabaseModels
+namespace CompanyManagmentApp.DatabaseModels
 {
     public class Departments
     {

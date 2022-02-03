@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AlfaThermTaskApp.DataAccess.IServices;
-using AlfaThermTaskApp.DatabaseModels;
+using CompanyManagmentApp.DataAccess.IServices;
+using CompanyManagmentApp.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlfaThermTaskApp.DataAccess.Services
+namespace CompanyManagmentApp.DataAccess.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly AlfathermdbContextFactory _dbContextFactory;
+        private readonly CompanyManagmentAppDbContextFactory _dbContextFactory;
 
-        public DepartmentService(AlfathermdbContextFactory dbContextFactory)
+        public DepartmentService(CompanyManagmentAppDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
@@ -21,7 +21,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Departments> Create(Departments newDepartment, Departments ancestor)
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 var departments = await GetAll();
 
@@ -51,7 +51,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Departments> CreateRoot(Departments departments)
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 Departments newDepartment = new Departments
                 {
@@ -77,7 +77,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<bool> Delete(HierarchyId Id)
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 List<Departments> toDelete = new List<Departments>();
                 var departments = await GetAll();
@@ -105,7 +105,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<IEnumerable<Departments>> GetAll()
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 return await _dbContext.Departments.ToListAsync();
             }
@@ -113,7 +113,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Departments> GetById(HierarchyId Id)
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 return await _dbContext.Departments.FirstOrDefaultAsync(x => x.Id == Id);
             }
@@ -121,7 +121,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Departments> Update(HierarchyId Id, Departments entity)
         {
-            using (AlfathermdbContext _dbContext = _dbContextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext _dbContext = _dbContextFactory.CreateDbContext())
             {
                 entity.Id = Id;
                 var newEntity =  _dbContext.Departments.Update(entity);

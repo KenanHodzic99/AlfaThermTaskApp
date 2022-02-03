@@ -1,5 +1,5 @@
-﻿using AlfaThermTaskApp.DataAccess.IServices;
-using AlfaThermTaskApp.DatabaseModels;
+﻿using CompanyManagmentApp.DataAccess.IServices;
+using CompanyManagmentApp.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DataAccess.Services
+namespace CompanyManagmentApp.DataAccess.Services
 {
     public class PermissionDataService : IDataService<Permission>
     {
-        AlfathermdbContextFactory alfathermdbContextFactory;
+        CompanyManagmentAppDbContextFactory alfathermdbContextFactory;
 
-        public PermissionDataService(AlfathermdbContextFactory alfathermdbContextFactory)
+        public PermissionDataService(CompanyManagmentAppDbContextFactory alfathermdbContextFactory)
         {
             this.alfathermdbContextFactory = alfathermdbContextFactory;
         }
@@ -21,7 +21,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
        
         public async Task<Permission> Create(Permission entity)
         {
-           using(AlfathermdbContext context = alfathermdbContextFactory.CreateDbContext())
+           using(CompanyManagmentAppDbContext context = alfathermdbContextFactory.CreateDbContext())
             {
                 var newPermission = entity;
                 newPermission.User = await context.Users.FirstOrDefaultAsync(x=>x.Id == newPermission.UserId);

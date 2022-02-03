@@ -1,0 +1,60 @@
+﻿<Application x:Class="CompanyManagmentApp.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CompanyManagmentApp.App"
+             xmlns:viewmodels="clr-namespace:CompanyManagmentApp.App.ViewModels"
+             xmlns:views="clr-namespace:CompanyManagmentApp.App.Views">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Common.xaml"/>
+                <ResourceDictionary Source="/Styles/NavigationBar.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type viewmodels:DepartmentsViewModel}">
+                <views:DepartmentsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:EmployeesViewModel}">
+                <views:EmployeesView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:JobsViewModel}">
+                <views:JobsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ProfileViewModel}">
+                <views:ProfileView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ProjectsViewModel}">
+                <views:ProjectsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:WorkCardViewModel}">
+                <views:WorkCardView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:LoginViewModel}">
+                <views:LoginView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:EditProjectViewModel}">
+                <views:EditProjectView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ChangePasswordViewModel}">
+                <views:ChangePasswordView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:EditWorkCardViewModel}">
+                <views:EditWorkCardView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:EditDepartmentViewModel}">
+                <views:EditDepartmentView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:EditJobViewModel}">
+                <views:EditJobView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:EditEmployeeViewModel}">
+                <views:EditEmployeeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:AddEmployeeViewModel}">
+                <views:AddEmployeeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:NoAccessViewModel}">
+                <views:NoAccessView/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

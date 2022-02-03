@@ -1,11 +1,11 @@
-﻿using AlfaThermTaskApp.DatabaseModels;
+﻿using CompanyManagmentApp.DatabaseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DataAccess.IServices
+namespace CompanyManagmentApp.DataAccess.IServices
 {
     public interface IAuthenticateService
     {

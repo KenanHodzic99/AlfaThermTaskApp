@@ -1,5 +1,5 @@
-﻿using AlfaThermTaskApp.DataAccess.IServices;
-using AlfaThermTaskApp.DatabaseModels;
+﻿using CompanyManagmentApp.DataAccess.IServices;
+using CompanyManagmentApp.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlfaThermTaskApp.DataAccess.Services
+namespace CompanyManagmentApp.DataAccess.Services
 {
     public class EmployeeDataService : IDataService<Employees>
     {
-        private readonly AlfathermdbContextFactory _contextFactory;
+        private readonly CompanyManagmentAppDbContextFactory _contextFactory;
 
-        public EmployeeDataService(AlfathermdbContextFactory contextFactory)
+        public EmployeeDataService(CompanyManagmentAppDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
         }
@@ -21,7 +21,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Employees> Create(Employees entity)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 var Job = await context.Jobs.Include(x=>x.Department).FirstOrDefaultAsync(x => x.Id == entity.JobId);
 
@@ -41,7 +41,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<bool> Delete(int id)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 var userToDelete = await context.Users.FirstOrDefaultAsync((e)=>e.EmployeeId == id);
                 var permissionsToDelete = await context.Permission.Where((e) => e.UserId == userToDelete.Id).ToListAsync();
@@ -58,7 +58,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Employees> Get(int id)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 Employees entity = await context.Employees.Include(x=>x.Job).Include(x=>x.Job.Department).FirstOrDefaultAsync((e) => e.Id == id);
 
@@ -69,7 +69,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<IEnumerable<Employees>> GetAll(object parameter = null)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 string searchParameter = (string)parameter;
                 if (searchParameter == string.Empty)
@@ -88,7 +88,7 @@ namespace AlfaThermTaskApp.DataAccess.Services
 
         public async Task<Employees> Update(int id, Employees entity)
         {
-            using (AlfathermdbContext context = _contextFactory.CreateDbContext())
+            using (CompanyManagmentAppDbContext context = _contextFactory.CreateDbContext())
             {
                 entity.Id = id;
                 context.Employees.Update(entity);

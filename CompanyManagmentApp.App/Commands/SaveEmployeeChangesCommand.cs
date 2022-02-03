@@ -14,19 +14,40 @@ namespace CompanyManagmentApp.App.Commands
     {
         private readonly ProfileViewModel profileViewModel;
         private readonly IDataService<Users> dataService;
+        private readonly IAuthenticator authenticator;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
+        }
 
-        public SaveEmployeeChangesCommand(ProfileViewModel profileViewModel, IDataService<Users> dataService)
+        public SaveEmployeeChangesCommand(ProfileViewModel profileViewModel, IDataService<Users> dataService, IAuthenticator authenticator)
         {
             this.profileViewModel = profileViewModel;
             this.dataService = dataService;
+            this.authenticator = authenticator;
         }
 
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            var Employee = this.authenticator.CurrentUser.Employee;
+            if(Employee.DateOfBirth.HasValue && !string.IsNullOrWhiteSpace(Employee.PersonalIdentityNumber)
+                && !string.IsNullOrWhiteSpace(Employee.Adress) && !string.IsNullOrWhiteSpace(Employee.Email) && !string.IsNullOrWhiteSpace(Employee.PhoneNumber))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async void Execute(object parameter)

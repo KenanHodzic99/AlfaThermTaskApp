@@ -42,7 +42,7 @@ namespace CompanyManagmentApp.App.ViewModels
             this.navigator = navigator;
             Init();
             ChangePassword = new ChangePasswordCommand(navigator,this,authenticator,dataService);
-            SaveChanges = new SaveEmployeeChangesCommand(this, dataService);
+            SaveChanges = new SaveEmployeeChangesCommand(this, dataService, this.authenticator);
         }
 
         public async void Init()

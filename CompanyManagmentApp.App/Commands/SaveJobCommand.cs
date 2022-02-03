@@ -18,7 +18,17 @@ namespace CompanyManagmentApp.App.Commands
         private readonly EditJobViewModel editJobViewModel;
         private readonly JobsViewModel jobViewModel;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
+        }
 
         public SaveJobCommand(IDataService<Jobs> dataService, INavigator navigator, EditJobViewModel editJobViewModel, JobsViewModel jobViewModel)
         {
@@ -30,7 +40,15 @@ namespace CompanyManagmentApp.App.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            var newJob = editJobViewModel.Job;
+            if(string.IsNullOrWhiteSpace(newJob.JobTitle) && newJob.Department == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public async void Execute(object parameter)

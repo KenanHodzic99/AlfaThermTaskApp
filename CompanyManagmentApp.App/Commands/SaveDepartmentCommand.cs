@@ -19,7 +19,17 @@ namespace CompanyManagmentApp.App.Commands
         private readonly bool isRoot;
         private readonly bool isEdit;
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                CommandManager.RequerySuggested -= value;
+            }
+        }
 
         public SaveDepartmentCommand(IDepartmentService departmentService, DepartmentsViewModel departmentsViewModel, INavigator navigator, EditDepartmentViewModel editDepartmentViewModel, bool isRoot, bool isEdit)
         {
@@ -33,7 +43,14 @@ namespace CompanyManagmentApp.App.Commands
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            if (string.IsNullOrWhiteSpace(editDepartmentViewModel.Department.DepartmentName))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public async void Execute(object parameter)

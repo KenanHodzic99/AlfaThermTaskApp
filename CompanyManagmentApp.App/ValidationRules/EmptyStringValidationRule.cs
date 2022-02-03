@@ -12,7 +12,7 @@ namespace CompanyManagmentApp.App.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if(string.Empty == value as string)
+            if(string.Empty == value as string || (value as string).Length < 3)
             {
                 return new ValidationResult(false,"Cannot leave this field empty!");
             }

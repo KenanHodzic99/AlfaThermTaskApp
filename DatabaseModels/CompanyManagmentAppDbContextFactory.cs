@@ -13,7 +13,7 @@ namespace CompanyManagmentApp.DatabaseModels
         public CompanyManagmentAppDbContext CreateDbContext(string[] args = null)
         {
             var options = new DbContextOptionsBuilder<CompanyManagmentAppDbContext>();
-            options.UseSqlServer("Data Source=.;Initial Catalog=AlfaThermDB;Integrated Security=True", conf =>
+            options.UseSqlServer("Data Source=.;Initial Catalog=CompanyManagmentAppDB;Integrated Security=True", conf =>
             {
                 conf.UseHierarchyId();
             });
